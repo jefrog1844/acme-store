@@ -7,12 +7,13 @@ import { CartService } from './cart.service';
 
 @Component({
   selector: 'app-cart',
-  template: `<app-cart-ui [lineItems]="lineItems"></app-cart-ui>`,
+  template: `<app-cart-ui [lineItems]="lineItems" [receipt]="receipt" (checkout)="checkout()"></app-cart-ui>`,
   styles: []
 })
 export class CartContainer implements OnDestroy, OnInit {
 
   lineItems: LineItem[];
+  receipt: string;
   customerId = '1';
   private unsubscribe: Subscription = new Subscription();
 
@@ -40,6 +41,19 @@ export class CartContainer implements OnDestroy, OnInit {
         this.lineItems = lineItems;
       });
     this.unsubscribe.add(addedSub);
+
+    const checkoutSub = this.api.checkedOut$
+      .subscribe((receipt) => {
+        this.lineItems = [];
+      });
+    this.unsubscribe.add(checkoutSub);
+  }
+
+  checkout(): void {
+    const checkSub = this.api.checkout(this.customerId).subscribe(receipt => {
+      this.receipt = receipt;
+    });
+    this.unsubscribe.add(checkSub);
   }
 
   ngOnDestroy(): void {

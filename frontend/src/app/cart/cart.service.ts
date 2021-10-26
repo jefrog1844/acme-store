@@ -1,12 +1,13 @@
 
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, share } from 'rxjs/operators';
 import { LineItem } from '../products/line-item';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  responseType: 'text',
 };
 const apiUrl = 'http://localhost:8081/cart';
 
@@ -15,14 +16,32 @@ const apiUrl = 'http://localhost:8081/cart';
 })
 export class CartService {
 
+  private _checkedOut: Subject<string> = new Subject<string>();
+  checkedOut$ = this._checkedOut.asObservable();
+
   constructor(private http: HttpClient) { }
 
   getCart(customerId: string): Observable<LineItem[]> {
-    return this.http.get<LineItem[]>(`${apiUrl}/${customerId}` )
+    return this.http.get<LineItem[]>(`${apiUrl}/${customerId}`)
       .pipe(
         share(),
         tap(_ => this.log('fetched cart')),
         catchError(this.handleError<LineItem[]>('getCart', []))
+      );
+  }
+
+  checkout(customerId: string): Observable<any> {
+    return this.http.put(`${apiUrl}/${customerId}/checkout`, '', {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      responseType: 'text',
+    })
+      .pipe(
+        tap((receipt) => {
+          this.log(`receipt: ${receipt}`);
+          this._checkedOut.next(receipt);
+        }
+        ),
+        catchError(this.handleError<any>('checkout', ''))
       );
   }
 

@@ -28,7 +28,7 @@ public class CartFacade {
     }
     
     public Receipt checkout(String customerId) {
-        List<LineItem> cartItems = repository.getCart(customerId);
+        List<LineItem> cartItems = repository.checkout(customerId);
         Receipt receipt = new Receipt(customerId, cartItems, salesTaxCalculator, importTaxCalculator);
         return receipt;
     }

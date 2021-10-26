@@ -17,11 +17,11 @@ import com.acme.store.business.store.entity.LineItem;
 public class CartRepository {
 
     private Map<Customer, List<LineItem>> carts = Collections.synchronizedMap(new HashMap<>());
-    
+
     public void addToCart(@Observes LineItemEvent event) {
         Customer customer = event.getCustomer();
         LineItem lineItem = event.getLineItem();
-        if(carts.containsKey(customer)) {
+        if (carts.containsKey(customer)) {
             carts.get(customer).add(lineItem);
         } else {
             List<LineItem> items = new ArrayList<>();
@@ -31,14 +31,24 @@ public class CartRepository {
     }
 
     public List<LineItem> getCart(String customerId) {
+        return carts.get(getCustomerEntry(customerId));
+    }
+
+    public List<LineItem> checkout(String customerId) {
+        Customer c = getCustomerEntry(customerId);
+        List<LineItem> cart = carts.remove(c);
+        return cart;
+    }
+
+    private Customer getCustomerEntry(String customerId) {
         Customer customer = null;
-        for(Customer c : carts.keySet()) {
-            if(c.getId().equals(customerId)) {
+        for (Customer c : carts.keySet()) {
+            if (c.getId().equals(customerId)) {
                 customer = c;
                 break;
             }
         }
-        return carts.get(customer);
+        return customer;
     }
-    
+
 }

@@ -10,8 +10,6 @@ import { ProductsService } from './products.service';
 })
 export class ProductsContainer implements OnDestroy, OnInit {
 
-  // _products = new Subject<Product[]>();
-  // product$ = this._products.asObservable();
   products: Product[];
 
   private unsubscribe: Subscription = new Subscription();
@@ -24,7 +22,6 @@ export class ProductsContainer implements OnDestroy, OnInit {
 
   getProductList(): void {
     const sub = this.api.getProductList().subscribe(products => {
-      // this._products.next(products);
       this.products = products;
     });
     this.unsubscribe.add(sub);

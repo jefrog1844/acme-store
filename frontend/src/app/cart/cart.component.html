@@ -1,30 +1,42 @@
-<p>
-  Shopping Cart:
-  <button class="mui-btn mui-btn--accent" [disabled]="!lineItems">
+<h1>Shopping Cart:</h1>
+<div *ngIf="lineItems; else elseBlock">
+  <button
+    type="button"
+    (click)="onCheckout()"
+    class="mui-btn mui-btn--accent"
+    [disabled]="!lineItems"
+  >
     <span class="material-icons" style="vertical-align: middle">
       shopping_cart
     </span>
-    Checkout {{ lineItems.length }} Item{{ lineItems.length > 1 ? 's' : '' }}
+    Checkout {{ lineItems.length }} Item{{ lineItems.length > 1 ? "s" : "" }}
   </button>
-</p>
 
-<div class="mui-panel">
-  <table class="mui-table mui-table--bordered">
-    <thead>
-      <tr>
-        <th>SKU</th>
-        <th>Description</th>
-        <th>Qty</th>
-        <th>Total Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let lineItem of lineItems">
-        <td>{{ lineItem.product.sku }}</td>
-        <td>{{ lineItem.product.description }}</td>
-        <td>{{ lineItem.quantity }}</td>
-        <td>{{ lineItem.product.price | currency }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="mui-panel">
+    <table class="mui-table mui-table--bordered">
+      <thead>
+        <tr>
+          <th>SKU</th>
+          <th>Description</th>
+          <th>Qty</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let lineItem of lineItems">
+          <td>{{ lineItem.product.sku }}</td>
+          <td>{{ lineItem.product.description }}</td>
+          <td>{{ lineItem.quantity }}</td>
+          <td>{{ lineItem.product.price | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="mui-panel" *ngIf="receipt">
+    <h1>Receipt</h1>
+    {{ receipt }}
+  </div>
 </div>
+<ng-template #elseBlock><h2>
+  Your cart is currently empty.</h2>
+</ng-template>
