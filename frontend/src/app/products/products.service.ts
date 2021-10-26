@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, share } from 'rxjs/operators';
 import { Product } from './product';
@@ -16,6 +16,8 @@ const apiUrl = 'http://localhost:8081/store/';
   providedIn: 'root'
 })
 export class ProductsService {
+  private _addedToCart: Subject<LineItem> = new Subject<LineItem>();
+  addedToCart$ = this._addedToCart.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -30,7 +32,10 @@ export class ProductsService {
 
   addToCart(purchaseRequest: PurchaseRequest): Observable<LineItem> {
     return this.http.post<LineItem>(apiUrl, purchaseRequest, httpOptions).pipe(
-      tap((entity: LineItem) => this.log(`added product to cart w/ sku=${entity.product.sku}`)),
+      tap((entity: LineItem) => {
+        this.log(`added product to cart w/ sku=${entity.product.sku}`);
+        this._addedToCart.next(entity);
+      }),
       catchError(this.handleError<LineItem>('addToCart'))
     );
   }

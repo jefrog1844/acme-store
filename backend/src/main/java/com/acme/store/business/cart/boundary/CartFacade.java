@@ -23,6 +23,10 @@ public class CartFacade {
     @Inject
     ImportTaxCalculator importTaxCalculator;
 
+    public List<LineItem> getCart(String customerId) {
+        return repository.getCart(customerId);
+    }
+    
     public Receipt checkout(String customerId) {
         List<LineItem> cartItems = repository.getCart(customerId);
         Receipt receipt = new Receipt(customerId, cartItems, salesTaxCalculator, importTaxCalculator);

@@ -32,6 +32,6 @@ export class ProductsContainer implements OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     this.unsubscribe.unsubscribe();
-}
+  }
 
 }

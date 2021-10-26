@@ -1,5 +1,7 @@
 package com.acme.store.business.cart.boundary;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -11,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.acme.store.business.cart.entity.Receipt;
+import com.acme.store.business.store.entity.LineItem;
 
 @ApplicationScoped
 @Path("cart")
@@ -19,6 +22,15 @@ public class CartResource {
     @Inject
     CartFacade facade;
     
+    @GET
+    @Path("{customerId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCart(@PathParam("customerId") String customerId) {
+        List<LineItem> cart = facade.getCart(customerId);
+        return Response.ok(cart).build();
+    }
+
     @GET
     @Path("{customerId}/checkout")
     @Consumes(MediaType.APPLICATION_JSON)

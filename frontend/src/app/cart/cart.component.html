@@ -1,12 +1,30 @@
-<p>Shopping Cart: 
-    <button class="mui-btn mui-btn--accent">
-        <span class="material-icons" style="vertical-align: middle;">
-            shopping_cart
-            </span>
-        Checkout [x] items
-    </button>
+<p>
+  Shopping Cart:
+  <button class="mui-btn mui-btn--accent">
+    <span class="material-icons" style="vertical-align: middle">
+      shopping_cart
+    </span>
+    Checkout [x] items
+  </button>
 </p>
 
 <div class="mui-panel">
-    <!-- content -->
-  </div>
+  <table class="mui-table mui-table--bordered">
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Description</th>
+        <th>Qty</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lineItem of lineItems">
+        <td>{{ lineItem.product.sku }}</td>
+        <td>{{ lineItem.product.description }}</td>
+        <td>{{ lineItem.quantity }}</td>
+        <td>{{ lineItem.product.price | currency }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
