@@ -1,0 +1,31 @@
+package com.acme.store.business.cart.boundary;
+
+import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+import com.acme.store.business.cart.control.CartRepository;
+import com.acme.store.business.cart.control.ImportTaxCalculator;
+import com.acme.store.business.cart.control.SalesTaxCalculator;
+import com.acme.store.business.cart.entity.Receipt;
+import com.acme.store.business.store.entity.LineItem;
+
+@ApplicationScoped
+public class CartFacade {
+    
+    @Inject
+    CartRepository repository;
+
+    @Inject
+    SalesTaxCalculator salesTaxCalculator;
+
+    @Inject
+    ImportTaxCalculator importTaxCalculator;
+
+    public Receipt checkout(String customerId) {
+        List<LineItem> cartItems = repository.getCart(customerId);
+        Receipt receipt = new Receipt(customerId, cartItems, salesTaxCalculator, importTaxCalculator);
+        return receipt;
+    }
+}
