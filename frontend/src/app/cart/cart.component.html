@@ -32,7 +32,7 @@
       </tbody>
     </table>
   </div>
-  <div class="mui-panel" *ngIf="receipt">
+  <div class="mui-panel" *ngIf="receipt && lineItems.length < 1">
     <h1>Receipt</h1>
     <pre>{{ receipt }}</pre>
     
