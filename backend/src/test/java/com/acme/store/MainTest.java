@@ -35,7 +35,6 @@ import io.quarkus.test.junit.QuarkusTest;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MainTest {
 
-
         private static String storeUrl;
         private static String cartUrl;
         private static JsonObjectBuilder body;
@@ -49,10 +48,9 @@ class MainTest {
 
         @BeforeEach
         public void newClient() {
-                
+
         }
 
-        
         @Test
         @Order(1)
         void testInput1() {
@@ -165,7 +163,8 @@ class MainTest {
         @Order(10)
         void testReceipt1() {
 
-                Receipt receipt = given().contentType(MediaType.APPLICATION_JSON).body("").get(cartUrl + "/{customerId}/receipt", "1").then()
+                Receipt receipt = given().contentType(MediaType.APPLICATION_JSON).body("")
+                                .get(cartUrl + "/{customerId}/receipt", "1").then()
                                 .statusCode(Status.OK.getStatusCode()).extract().as(Receipt.class);
                 printReceipt(receipt);
         }
@@ -174,7 +173,8 @@ class MainTest {
         @Order(11)
         void testReceipt2() {
 
-                Receipt receipt = given().contentType(MediaType.APPLICATION_JSON).body("").get(cartUrl + "/{customerId}/receipt", "2").then()
+                Receipt receipt = given().contentType(MediaType.APPLICATION_JSON).body("")
+                                .get(cartUrl + "/{customerId}/receipt", "2").then()
                                 .statusCode(Status.OK.getStatusCode()).extract().as(Receipt.class);
                 printReceipt(receipt);
         }
@@ -183,12 +183,11 @@ class MainTest {
         @Order(12)
         void testReceipt3() {
 
-                Receipt receipt = given().contentType(MediaType.APPLICATION_JSON).body("").get(cartUrl + "/{customerId}/receipt", "3").then()
+                Receipt receipt = given().contentType(MediaType.APPLICATION_JSON).body("")
+                                .get(cartUrl + "/{customerId}/receipt", "3").then()
                                 .statusCode(Status.OK.getStatusCode()).extract().as(Receipt.class);
                 printReceipt(receipt);
         }
-
-        
 
         private void printReceipt(Receipt receipt) {
                 System.out.print(receipt.print());
@@ -197,6 +196,6 @@ class MainTest {
 
         @AfterAll
         static void destroyClass() {
-               
+
         }
 }
