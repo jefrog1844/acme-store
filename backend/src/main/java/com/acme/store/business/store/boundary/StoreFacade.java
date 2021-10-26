@@ -22,10 +22,11 @@ public class StoreFacade {
     @Inject
     Event<LineItemEvent> event;
 
-    public void addToCart(PurchaseRequest purchaseRequest) {
+    public LineItem addToCart(PurchaseRequest purchaseRequest) {
         Customer customer = repository.getCustomerById(purchaseRequest.getCustomerId());
         LineItem lineItem = new LineItem(getProductBySku(purchaseRequest.getSku()), 1);
         this.event.fire(new LineItemEvent(customer, lineItem));
+        return lineItem;
     }
 
     private Product getProductBySku(Long sku) {

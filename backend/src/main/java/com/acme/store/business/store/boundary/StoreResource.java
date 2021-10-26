@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.acme.store.business.store.entity.LineItem;
 import com.acme.store.business.store.entity.Product;
 import com.acme.store.business.store.entity.PurchaseRequest;
 
@@ -34,7 +35,7 @@ public class StoreResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addToCart(@Valid PurchaseRequest purchaseRequest) {
-        facade.addToCart(purchaseRequest);
-        return Response.ok().status(Status.ACCEPTED).build();
+        LineItem li = facade.addToCart(purchaseRequest);
+        return Response.ok(li).status(Status.ACCEPTED).build();
     }
 }

@@ -9,7 +9,7 @@
             <li>{{ product.description }}</li>
             <li>{{ product.price | currency}}</li>
           </ul>
-          <button type="button" class="mui-btn mui-btn--primary">
+          <button (click)="addToCart(product)" type="button" class="mui-btn mui-btn--primary">
             <span class="material-icons" style="vertical-align: middle">
               add_shopping_cart
             </span>
