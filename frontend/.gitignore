@@ -6,6 +6,7 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
+/resources/META-INF/resources
 
 # dependencies
 /node_modules
