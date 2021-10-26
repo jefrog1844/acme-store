@@ -1,1 +1,21 @@
-<p>{{product.description}}</p>
+<div class="mui-col-md-4">
+    <div class="mui-panel">
+      <div class="mui-row">
+        <div class="mui-col-md-12"><h2>
+          <span class="material-icons" style="vertical-align: middle; padding-right: 7px;">
+            qr_code
+          </span>Product #{{ product.sku }}</h2>
+          <ul>
+            <li>{{ product.description }}</li>
+            <li>{{ product.price | currency}}</li>
+          </ul>
+          <button type="button" class="mui-btn mui-btn--primary">
+            <span class="material-icons" style="vertical-align: middle">
+              add_shopping_cart
+            </span>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
