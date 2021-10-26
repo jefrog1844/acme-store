@@ -1,12 +1,10 @@
 package com.acme.store.business.store.boundary;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.json.JsonObject;
 
 import com.acme.store.business.store.control.LineItemEvent;
 import com.acme.store.business.store.control.StoreRepository;
