@@ -1,10 +1,10 @@
 <p>
   Shopping Cart:
-  <button class="mui-btn mui-btn--accent">
+  <button class="mui-btn mui-btn--accent" [disabled]="!lineItems">
     <span class="material-icons" style="vertical-align: middle">
       shopping_cart
     </span>
-    Checkout [x] items
+    Checkout {{ lineItems.length }} Item{{ lineItems.length > 1 ? 's' : '' }}
   </button>
 </p>
 
