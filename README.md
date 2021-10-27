@@ -18,7 +18,7 @@ git clone https://github.com/jefrog1844/acme-store.git
 ## Building the User Interface (optional)
 
 The Angular front end user interface is already compiled and packaged with the Quarkus microservice.
-If however, you choose to make any changes to the front end interface, it will need recompiled and distirbuted to the backend service.
+If however, you choose to make any changes to the front end interface, it will need recompiled and distributed to the backend service.
 If changes are made, navigate to the frontend directory to execute build scripts.  The Angular application can now be built in two steps:
 
 **Install with NPM:**
