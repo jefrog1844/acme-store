@@ -3,7 +3,11 @@
 [![Angular](https://angular.io/assets/images/favicons/favicon-194x194.png)](https://angular.io/)
 <img src="https://design.jboss.org/quarkus/logo/final/PNG/quarkus_icon_rgb_256px_default.png" style="height: 192px;">
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework and Angular, the modern web developer's platform.
+This project is built with:
+
+MUI, a lightweight CSS framework that follows Google's Material Design guidelines
+Angular, the modern web developer's platform
+Quarkus, the Supersonic Subatomic Java Framework
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
