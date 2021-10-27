@@ -1,4 +1,5 @@
 # acme-store Project
+[![MUI](https://www.muicss.com/static/favicons/icon-192x192.png)](https://www.muicss.com/)
 [![Angular](https://angular.io/assets/images/favicons/favicon-194x194.png)](https://angular.io/)
 [![Quarkus](https://quarkus.io/assets/images/quarkus_logo_horizontal_rgb_reverse.svg)](https://quarkus.io/)
 
