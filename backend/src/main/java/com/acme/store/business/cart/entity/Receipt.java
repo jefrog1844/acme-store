@@ -92,6 +92,7 @@ public class Receipt {
             sb.append(finalPrice);
             sb.append(System.lineSeparator());
         }
+        sb.append(System.lineSeparator());
         sb.append("Sales Taxes: " + totalTax);
         sb.append(System.lineSeparator());
         sb.append("Total: " + totalCost);
