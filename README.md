@@ -1,7 +1,7 @@
 # acme-store Project
 [![MUI](https://www.muicss.com/static/favicons/icon-192x192.png)](https://www.muicss.com/)
 [![Angular](https://angular.io/assets/images/favicons/favicon-194x194.png)](https://angular.io/)
-[![Quarkus](https://quarkus.io/favicon.ico)](https://quarkus.io/)
+[![Quarkus](https://quarkus.io/favicon.ico){:height="192px" width="192px"}](https://quarkus.io/)
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework and Angular, the modern web developer's platform.
 
