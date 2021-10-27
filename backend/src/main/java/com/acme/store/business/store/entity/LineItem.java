@@ -1,6 +1,7 @@
 package com.acme.store.business.store.entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.acme.store.business.cart.control.ImportTaxCalculator;
 import com.acme.store.business.cart.control.SalesTaxCalculator;
@@ -35,7 +36,7 @@ public class LineItem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getFinalPrice(SalesTaxCalculator salesTaxCalculator, ImportTaxCalculator importTaxCalculator) {
+    public BigDecimal getTax(SalesTaxCalculator salesTaxCalculator, ImportTaxCalculator importTaxCalculator) {
         BigDecimal salesTax = BigDecimal.valueOf(0.0);
         BigDecimal importTax = BigDecimal.valueOf(0.0);
 
@@ -47,7 +48,7 @@ public class LineItem {
             importTax = importTaxCalculator.calculate(getProduct().price());
         }
 
-        return getProduct().price().add(salesTax).add(importTax);
+        return salesTax.add(importTax).setScale(2, RoundingMode.HALF_UP);
     }
 
 }

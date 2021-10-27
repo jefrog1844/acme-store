@@ -161,10 +161,10 @@ class MainTest {
                 Receipt receipt = given().contentType(MediaType.APPLICATION_JSON).body("")
                                 .get(cartUrl + "/{customerId}/receipt", "1").then()
                                 .statusCode(Status.OK.getStatusCode()).extract().as(Receipt.class);
-                printReceipt(receipt);
 
-                Assertions.assertEquals(0, receipt.getTotalCost().compareTo(BigDecimal.valueOf(29.83)));
-                Assertions.assertEquals(0, receipt.getTotalTax().compareTo(BigDecimal.valueOf(1.50)));
+                Assertions.assertEquals(0, receipt.totalCost().compareTo(BigDecimal.valueOf(29.83)));
+                Assertions.assertEquals(0, receipt.totalTax().compareTo(BigDecimal.valueOf(1.50)));
+                printReceipt(receipt);
 
         }
 
@@ -175,10 +175,10 @@ class MainTest {
                 Receipt receipt = given().contentType(MediaType.APPLICATION_JSON).body("")
                                 .get(cartUrl + "/{customerId}/receipt", "2").then()
                                 .statusCode(Status.OK.getStatusCode()).extract().as(Receipt.class);
-                printReceipt(receipt);
 
-                Assertions.assertEquals(0, receipt.getTotalCost().compareTo(BigDecimal.valueOf(65.15)));
-                Assertions.assertEquals(0, receipt.getTotalTax().compareTo(BigDecimal.valueOf(7.65)));
+                Assertions.assertEquals(0, receipt.totalCost().compareTo(BigDecimal.valueOf(65.15)));
+                Assertions.assertEquals(0, receipt.totalTax().compareTo(BigDecimal.valueOf(7.65)));
+                printReceipt(receipt);
 
         }
 
@@ -189,10 +189,10 @@ class MainTest {
                 Receipt receipt = given().contentType(MediaType.APPLICATION_JSON).body("")
                                 .get(cartUrl + "/{customerId}/receipt", "3").then()
                                 .statusCode(Status.OK.getStatusCode()).extract().as(Receipt.class);
-                printReceipt(receipt);
 
-                Assertions.assertEquals(0, receipt.getTotalCost().compareTo(BigDecimal.valueOf(74.68)));
-                Assertions.assertEquals(0, receipt.getTotalTax().compareTo(BigDecimal.valueOf(6.70)));
+                Assertions.assertEquals(0, receipt.totalCost().compareTo(BigDecimal.valueOf(74.68)));
+                Assertions.assertEquals(0, receipt.totalTax().compareTo(BigDecimal.valueOf(6.70)));
+                printReceipt(receipt);
 
         }
 

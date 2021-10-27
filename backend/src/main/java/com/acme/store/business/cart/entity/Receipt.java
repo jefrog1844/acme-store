@@ -15,8 +15,6 @@ public class Receipt {
     private List<LineItem> items = new ArrayList<>();
     private SalesTaxCalculator salesTaxCalculator;
     private ImportTaxCalculator importTaxCalculator;
-    private BigDecimal totalTax = BigDecimal.valueOf(0.0);
-    private BigDecimal totalCost = BigDecimal.valueOf(0.0);
 
     public Receipt() {
     }
@@ -45,14 +43,6 @@ public class Receipt {
         this.items = items;
     }
 
-    public BigDecimal getTotalTax() {
-        return totalTax;
-    }
-
-    public void setTotalTax(BigDecimal totalTax) {
-        this.totalTax = totalTax;
-    }
-
     public SalesTaxCalculator getSalesTaxCalculator() {
         return salesTaxCalculator;
     }
@@ -69,12 +59,21 @@ public class Receipt {
         this.importTaxCalculator = importTaxCalculator;
     }
 
-    public BigDecimal getTotalCost() {
-        return totalCost;
+    public BigDecimal totalCost() {
+        BigDecimal totalCost = BigDecimal.valueOf(0.0);
+        for (LineItem li : items) {
+            BigDecimal finalPrice = li.getProduct().getPrice().add(li.getTax(salesTaxCalculator, importTaxCalculator));
+            totalCost = totalCost.add(finalPrice);
+        }
+        return totalCost.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
+    public BigDecimal totalTax() {
+        BigDecimal totalTax = BigDecimal.valueOf(0.0);
+        for (LineItem li : items) {
+            totalTax = totalTax.add(li.getTax(salesTaxCalculator, importTaxCalculator));
+        }
+        return totalTax.setScale(2, RoundingMode.HALF_UP);
     }
 
     public String print() {
@@ -85,17 +84,14 @@ public class Receipt {
             sb.append(" ");
             sb.append(li.getProduct().description());
             sb.append(": ");
-            BigDecimal finalPrice = li.getFinalPrice(salesTaxCalculator, importTaxCalculator).setScale(2,
-                    RoundingMode.HALF_UP);
-            totalCost = totalCost.add(finalPrice).setScale(2, RoundingMode.HALF_UP);
-            totalTax = totalTax.add(finalPrice).subtract(li.getProduct().getPrice()).setScale(2, RoundingMode.HALF_UP);
-            sb.append(finalPrice);
+            BigDecimal tax = li.getTax(salesTaxCalculator, importTaxCalculator);
+            sb.append(li.getProduct().getPrice().add(tax));
             sb.append(System.lineSeparator());
         }
         sb.append(System.lineSeparator());
-        sb.append("Sales Taxes: " + totalTax);
+        sb.append("Sales Taxes: " + totalTax());
         sb.append(System.lineSeparator());
-        sb.append("Total: " + totalCost);
+        sb.append("Total: " + totalCost());
         sb.append(System.lineSeparator());
         return sb.toString();
     }
