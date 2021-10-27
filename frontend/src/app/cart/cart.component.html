@@ -1,15 +1,16 @@
 <h1>Shopping Cart:</h1>
-<div *ngIf="lineItems; else elseBlock">
+
   <button
     type="button"
     (click)="onCheckout()"
     class="mui-btn mui-btn--accent"
-    [disabled]="!lineItems"
+    [disabled]="!lineItems || lineItems.length < 1"
   >
-    <span class="material-icons" style="vertical-align: middle">
+    <span class="material-icons" style="vertical-align: middle;padding-right: 7px;">
       shopping_cart
     </span>
-    Checkout {{ lineItems.length }} Item{{ lineItems.length > 1 ? "s" : "" }}
+    <ng-container *ngIf="!lineItems || lineItems.length < 1; else elseBlock">Checkout 0 items</ng-container>
+    
   </button>
 
   <div class="mui-panel">
@@ -37,10 +38,7 @@
     <pre>{{ receipt }}</pre>
     
   </div>
-</div>
-<ng-template #elseBlock>
-  <span class="material-icons" style="vertical-align: middle">
-  add_shopping_cart
-</span>
-Click 'Add to cart' on a product
-</ng-template>
+  <ng-template #elseBlock>
+    Checkout {{ lineItems.length }} Item{{ lineItems.length > 1 ? "s" : "" }}
+  </ng-template>
+
