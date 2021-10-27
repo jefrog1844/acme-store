@@ -3,6 +3,9 @@ package com.acme.store;
 
 import static io.restassured.RestAssured.given;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.core.MediaType;
@@ -11,6 +14,7 @@ import javax.ws.rs.core.Response.Status;
 import com.acme.store.business.cart.entity.Receipt;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -158,6 +162,10 @@ class MainTest {
                                 .get(cartUrl + "/{customerId}/receipt", "1").then()
                                 .statusCode(Status.OK.getStatusCode()).extract().as(Receipt.class);
                 printReceipt(receipt);
+
+                Assertions.assertEquals(0, receipt.getTotalCost().compareTo(BigDecimal.valueOf(29.83)));
+                Assertions.assertEquals(0, receipt.getTotalTax().compareTo(BigDecimal.valueOf(1.50)));
+
         }
 
         @Test
@@ -168,6 +176,10 @@ class MainTest {
                                 .get(cartUrl + "/{customerId}/receipt", "2").then()
                                 .statusCode(Status.OK.getStatusCode()).extract().as(Receipt.class);
                 printReceipt(receipt);
+
+                Assertions.assertEquals(0, receipt.getTotalCost().compareTo(BigDecimal.valueOf(65.15)));
+                Assertions.assertEquals(0, receipt.getTotalTax().compareTo(BigDecimal.valueOf(7.65)));
+
         }
 
         @Test
@@ -178,6 +190,10 @@ class MainTest {
                                 .get(cartUrl + "/{customerId}/receipt", "3").then()
                                 .statusCode(Status.OK.getStatusCode()).extract().as(Receipt.class);
                 printReceipt(receipt);
+
+                Assertions.assertEquals(0, receipt.getTotalCost().compareTo(BigDecimal.valueOf(74.68)));
+                Assertions.assertEquals(0, receipt.getTotalTax().compareTo(BigDecimal.valueOf(6.70)));
+
         }
 
         private void printReceipt(Receipt receipt) {
