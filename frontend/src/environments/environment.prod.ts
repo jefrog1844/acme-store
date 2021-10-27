@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  storeUrl: '/store/',
+  cartUrl: '/cart/',
+  checkout: '/checkout'
 };

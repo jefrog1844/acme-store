@@ -6,11 +6,11 @@ import { catchError, tap, share } from 'rxjs/operators';
 import { Product } from './product';
 import { PurchaseRequest } from './purchase-request';
 import { LineItem } from './line-item';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
-const apiUrl = 'http://localhost:8081/store/';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class ProductsService {
   constructor(private http: HttpClient) { }
 
   getProductList(): Observable<Product[]> {
-    return this.http.get<Product[]>(apiUrl, )
+    return this.http.get<Product[]>(`${environment.storeUrl}`)
       .pipe(
         share(),
         tap(_ => this.log('fetched product list')),
@@ -31,7 +31,7 @@ export class ProductsService {
   }
 
   addToCart(purchaseRequest: PurchaseRequest): Observable<LineItem> {
-    return this.http.post<LineItem>(apiUrl, purchaseRequest, httpOptions).pipe(
+    return this.http.post<LineItem>(`${environment.storeUrl}`, purchaseRequest, httpOptions).pipe(
       tap((entity: LineItem) => {
         this.log(`added product to cart w/ sku=${entity.product.sku}`);
         this._addedToCart.next(entity);

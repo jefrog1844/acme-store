@@ -4,12 +4,12 @@ import { Observable, of, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, share } from 'rxjs/operators';
 import { LineItem } from '../products/line-item';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   responseType: 'text',
 };
-const apiUrl = 'http://localhost:8081/cart';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class CartService {
   constructor(private http: HttpClient) { }
 
   getCart(customerId: string): Observable<LineItem[]> {
-    return this.http.get<LineItem[]>(`${apiUrl}/${customerId}`)
+    return this.http.get<LineItem[]>(`${environment.cartUrl}${customerId}`)
       .pipe(
         share(),
         tap(_ => this.log('fetched cart')),
@@ -31,7 +31,7 @@ export class CartService {
   }
 
   checkout(customerId: string): Observable<any> {
-    return this.http.put(`${apiUrl}/${customerId}/checkout`, '', {
+    return this.http.put(`${environment.cartUrl}${customerId}${environment.checkout}`, '', {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       responseType: 'text',
     })
