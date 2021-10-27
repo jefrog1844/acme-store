@@ -79,7 +79,6 @@ public class Receipt {
 
     public String print() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Output ").append(customerId).append(":");
         sb.append(System.lineSeparator());
         for (LineItem li : items) {
             sb.append(li.getQuantity());
