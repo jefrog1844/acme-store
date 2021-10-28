@@ -38,17 +38,14 @@ public class CartRepository {
 
     public List<LineItem> getCart(String customerId) {
         // find the customer
-        Customer c = getCustomerEntry(customerId).orElseThrow();
-        return carts.get(c);
+        Optional<Customer> optional = getCustomerEntry(customerId);
+        return optional.isPresent() ? carts.get(optional.get()) : new ArrayList<LineItem>();
     }
 
     public List<LineItem> checkout(String customerId) {
         // find the customer
-        Customer c = getCustomerEntry(customerId).orElseThrow();
-
-        // return the line items and remove the cart
-        List<LineItem> cart = carts.remove(c);
-        return cart;
+        Optional<Customer> optional = getCustomerEntry(customerId);
+        return optional.isPresent() ? carts.remove(optional.get()) : new ArrayList<LineItem>();
     }
 
     private Optional<Customer> getCustomerEntry(String customerId) {
