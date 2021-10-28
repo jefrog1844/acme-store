@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
@@ -18,6 +19,12 @@ public class CartRepository {
 
     private Map<Customer, List<LineItem>> carts = Collections.synchronizedMap(new HashMap<>());
 
+    /**
+     * Listens for a LineItemEvent from the store and places a line item into the
+     * customer's cart
+     * 
+     * @param event - LineItemEvent
+     */
     public void addToCart(@Observes LineItemEvent event) {
         Customer customer = event.getCustomer();
         LineItem lineItem = event.getLineItem();
@@ -31,24 +38,20 @@ public class CartRepository {
     }
 
     public List<LineItem> getCart(String customerId) {
-        return carts.get(getCustomerEntry(customerId));
+        // find the customer
+        Optional<Customer> optional = getCustomerEntry(customerId);
+        return optional.isPresent() ? carts.get(optional.get()) : new ArrayList<LineItem>();
     }
 
     public List<LineItem> checkout(String customerId) {
-        Customer c = getCustomerEntry(customerId);
-        List<LineItem> cart = carts.remove(c);
-        return cart;
+        // find the customer
+        Optional<Customer> optional = getCustomerEntry(customerId);
+        return optional.isPresent() ? carts.remove(optional.get()) : new ArrayList<LineItem>();
     }
 
-    private Customer getCustomerEntry(String customerId) {
-        Customer customer = null;
-        for (Customer c : carts.keySet()) {
-            if (c.getId().equals(customerId)) {
-                customer = c;
-                break;
-            }
-        }
-        return customer;
+    private Optional<Customer> getCustomerEntry(String customerId) {
+        return carts.entrySet().stream().filter(e -> e.getKey().getId().equals(customerId)).map(Map.Entry::getKey)
+                .findFirst();
     }
 
 }

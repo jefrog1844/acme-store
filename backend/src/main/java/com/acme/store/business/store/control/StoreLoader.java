@@ -2,6 +2,7 @@ package com.acme.store.business.store.control;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
@@ -31,14 +32,15 @@ public class StoreLoader {
     @ConfigProperty(name = "app.customers")
     String customersFile;
 
-    private Map<Long,Product> products = new HashMap<>();
-    private Map<String,Customer> customers = new HashMap<>();
-    
-    public StoreLoader() {}
+    private Map<Long, Product> products = new HashMap<>();
+    private Map<String, Customer> customers = new HashMap<>();
+
+    public StoreLoader() {
+    }
 
     public void onStartup(@Observes @Initialized(ApplicationScoped.class) final Object event) {
         loadProducts();
-        loadCustomers();        
+        loadCustomers();
     }
 
     private void loadProducts() {
@@ -67,11 +69,13 @@ public class StoreLoader {
         }
     }
 
-    public Map<Long,Product> getProducts() {
+    public Map<Long, Product> getProducts() {
         return this.products;
     }
 
     public Customer getCustomer(String customerId) {
-        return customers.get(customerId);
+        Optional<Customer> optional = customers.entrySet().stream().filter(e -> e.getKey().equals(customerId))
+                .map(Map.Entry::getValue).findFirst();
+        return optional.orElseThrow();
     }
 }

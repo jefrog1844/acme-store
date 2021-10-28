@@ -17,6 +17,11 @@ If you want to learn more about Angular, please visit its website: https://angul
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
+## Requirements
+
+Java 11
+Maven 3.8.1
+
 ## Downloading the application
 
 The application can be downloaded from github with the following command:
@@ -77,8 +82,11 @@ The microservice can be unit tested with the following command:
 
 Unit tests are also executed as part of the packaging process.
 
-**Test with Karma:**
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Using the application
+
+Add products to the cart by clicking the 'ADD TO CART' button on any product card
+
+Clicking the 'CHECKOUT ... ITEMS' button will clear the cart and generate a receipt
 
 
 
