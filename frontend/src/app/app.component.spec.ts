@@ -11,8 +11,6 @@ import { ProductComponent } from './products/product/product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CartService } from './cart/cart.service';
 import { ProductsService } from './products/products.service';
-import { ReceiptContainer } from './receipt/receipt.container';
-import { ReceiptComponent } from './receipt/receipt.component';
 
 class MockCartService {
   getCart: [];
@@ -101,8 +99,6 @@ describe('AppComponent', () => {
         ProductsComponent,
         ProductContainer,
         ProductComponent,
-        ReceiptContainer,
-        ReceiptComponent
       ],
     }).compileComponents();
     cartService = TestBed.inject(CartService);
@@ -118,13 +114,7 @@ describe('AppComponent', () => {
   it(`should have as title 'frontend'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('frontend');
+    expect(app.title).toEqual('ACME Store');
   });
 
-  // it('should render title', () => {
-  // const fixture = TestBed.createComponent(AppComponent);
-  // fixture.detectChanges();
-  //  const compiled = fixture.nativeElement;
-  // expect(compiled.querySelector('.content span').textContent).toContain('frontend app is running!');
-  // });
 });
