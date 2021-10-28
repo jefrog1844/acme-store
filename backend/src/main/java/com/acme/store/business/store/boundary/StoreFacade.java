@@ -23,9 +23,16 @@ public class StoreFacade {
     Event<LineItemEvent> event;
 
     public LineItem addToCart(PurchaseRequest purchaseRequest) {
-        Customer customer = repository.getCustomerById(purchaseRequest.getCustomerId());
+
+        // find the customer
+        Customer customer = getCustomer(purchaseRequest.getCustomerId());
+
+        // initiate a new line item for the selected product
         LineItem lineItem = new LineItem(getProductBySku(purchaseRequest.getSku()), 1);
+
+        // notify listeners that a product has been selected and needs added to a cart
         this.event.fire(new LineItemEvent(customer, lineItem));
+
         return lineItem;
     }
 
@@ -35,6 +42,10 @@ public class StoreFacade {
 
     public Map<Long, Product> getProducts() {
         return this.repository.getProducts();
+    }
+
+    private Customer getCustomer(String customerId) {
+        return repository.getCustomerById(customerId);
     }
 
 }

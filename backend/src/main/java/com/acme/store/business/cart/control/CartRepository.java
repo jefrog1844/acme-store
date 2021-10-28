@@ -20,8 +20,9 @@ public class CartRepository {
     private Map<Customer, List<LineItem>> carts = Collections.synchronizedMap(new HashMap<>());
 
     /**
-     * Listens for a LineItemEvent from the store and places a line item
-     * into the customer's cart
+     * Listens for a LineItemEvent from the store and places a line item into the
+     * customer's cart
+     * 
      * @param event - LineItemEvent
      */
     public void addToCart(@Observes LineItemEvent event) {
@@ -49,14 +50,8 @@ public class CartRepository {
     }
 
     private Optional<Customer> getCustomerEntry(String customerId) {
-        Optional<Customer> optional = Optional.empty();
-        for (Customer c : carts.keySet()) {
-            if (c.getId().equals(customerId)) {
-                optional = Optional.of(c);
-                break;
-            }
-        }
-        return optional;
+        return carts.entrySet().stream().filter(e -> e.getKey().getId().equals(customerId)).map(Map.Entry::getKey)
+                .findFirst();
     }
 
 }
