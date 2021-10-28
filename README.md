@@ -17,6 +17,11 @@ If you want to learn more about Angular, please visit its website: https://angul
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
+## Requirements
+
+Java 11
+Maven 3.8.1
+
 ## Downloading the application
 
 The application can be downloaded from github with the following command:
