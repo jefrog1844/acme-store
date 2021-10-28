@@ -82,6 +82,14 @@ The microservice can be unit tested with the following command:
 
 Unit tests are also executed as part of the packaging process.
 
+**Test with Angular:**
+The front end unit tests can be exectured with the following command:
+```shell script
+ng test
+```
+
+Note: In order to run Angular unit tests, first follow the instructions for installing NPM
+
 ### Using the application
 
 Add products to the cart by clicking the 'ADD TO CART' button on any product card
