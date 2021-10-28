@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
@@ -18,6 +19,11 @@ public class CartRepository {
 
     private Map<Customer, List<LineItem>> carts = Collections.synchronizedMap(new HashMap<>());
 
+    /**
+     * Listens for a LineItemEvent from the store and places a line item
+     * into the customer's cart
+     * @param event - LineItemEvent
+     */
     public void addToCart(@Observes LineItemEvent event) {
         Customer customer = event.getCustomer();
         LineItem lineItem = event.getLineItem();
@@ -31,24 +37,29 @@ public class CartRepository {
     }
 
     public List<LineItem> getCart(String customerId) {
-        return carts.get(getCustomerEntry(customerId));
+        // find the customer
+        Customer c = getCustomerEntry(customerId).orElseThrow();
+        return carts.get(c);
     }
 
     public List<LineItem> checkout(String customerId) {
-        Customer c = getCustomerEntry(customerId);
+        // find the customer
+        Customer c = getCustomerEntry(customerId).orElseThrow();
+
+        // return the line items and remove the cart
         List<LineItem> cart = carts.remove(c);
         return cart;
     }
 
-    private Customer getCustomerEntry(String customerId) {
-        Customer customer = null;
+    private Optional<Customer> getCustomerEntry(String customerId) {
+        Optional<Customer> optional = Optional.empty();
         for (Customer c : carts.keySet()) {
             if (c.getId().equals(customerId)) {
-                customer = c;
+                optional = Optional.of(c);
                 break;
             }
         }
-        return customer;
+        return optional;
     }
 
 }

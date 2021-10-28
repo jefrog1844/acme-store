@@ -1,46 +1,23 @@
 package com.acme.store.business.cart.control;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.config.ConfigProvider;
 
 @ApplicationScoped
-public class ImportTaxCalculator implements Calculator {
+public class ImportTaxCalculator extends TaxCalculator {
 
-  @Inject
-  @ConfigProperty(name = "com.acme.store.tax.import")
-  BigDecimal taxRate;
+  private static final BigDecimal TAX_RATE = ConfigProvider.getConfig().getValue("com.acme.store.tax.import",
+      BigDecimal.class);
 
   public ImportTaxCalculator() {
   }
 
-  public BigDecimal calculate(BigDecimal price) {
-    BigDecimal tax = price.multiply(taxRate);
-    return round(tax);
-  }
-
-  public BigDecimal getTaxRate() {
-    return taxRate;
-  }
-
-  public void setTaxRate(BigDecimal taxRate) {
-    this.taxRate = taxRate;
-  }
-
-  private BigDecimal round(BigDecimal value) {
-    BigDecimal inc = new BigDecimal(.05);
-    if (inc.signum() == 0) {
-      // 0 increment does not make much sense, but prevent division by 0
-      return value;
-    } else {
-      BigDecimal divided = value.divide(inc, 0, RoundingMode.UP);
-      BigDecimal result = divided.multiply(inc);
-      return result;
-    }
+  @Override
+  protected BigDecimal taxRate() {
+    return TAX_RATE;
   }
 
 }
