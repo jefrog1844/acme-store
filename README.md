@@ -82,9 +82,6 @@ The microservice can be unit tested with the following command:
 
 Unit tests are also executed as part of the packaging process.
 
-**Test with Karma:**
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
 
 
 
