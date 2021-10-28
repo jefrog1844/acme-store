@@ -84,7 +84,7 @@ Unit tests are also executed as part of the packaging process.
 
 ### Using the application
 
-Add products to the cart by clicking the 'ADD TO CART' button on any product cart
+Add products to the cart by clicking the 'ADD TO CART' button on any product card
 
 Clicking the 'CHECKOUT ... ITEMS' button will clear the cart and generate a receipt
 
