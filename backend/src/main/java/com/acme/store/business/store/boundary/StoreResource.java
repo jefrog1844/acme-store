@@ -1,7 +1,6 @@
 package com.acme.store.business.store.boundary;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -32,6 +31,7 @@ public class StoreResource {
         Collection<Product> products = facade.getProducts().values();
         return Response.ok(products).build();
     }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addToCart(@Valid PurchaseRequest purchaseRequest) {

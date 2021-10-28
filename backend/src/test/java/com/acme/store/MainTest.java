@@ -4,7 +4,6 @@ package com.acme.store;
 import static io.restassured.RestAssured.given;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
