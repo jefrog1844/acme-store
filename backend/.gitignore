@@ -4,4 +4,4 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 release.properties
-main/resources/META-INF/resources
+/src/main/resources/META-INF/resources/
