@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-//import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Product } from './product';
 import { ProductsComponent } from './products.component';
 import { ProductsService } from './products.service';
@@ -14,7 +14,7 @@ import { ProductsService } from './products.service';
 export class ProductsContainer implements OnDestroy, OnInit {
   products: Product[] = [];
 
-  //private unsubscribe: Subscription = new Subscription();
+  private unsubscribe: Subscription = new Subscription();
 
   constructor(private api: ProductsService) {}
 
@@ -26,10 +26,10 @@ export class ProductsContainer implements OnDestroy, OnInit {
     const sub = this.api.getProductList().subscribe((products: Product[]) => {
       this.products = products;
     });
-    //this.unsubscribe.add(sub);
+    this.unsubscribe.add(sub);
   }
 
   ngOnDestroy(): void {
-    //this.unsubscribe.unsubscribe();
+    this.unsubscribe.unsubscribe();
   }
 }
