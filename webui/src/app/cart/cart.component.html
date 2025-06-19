@@ -1,0 +1,44 @@
+<h1>Shopping Cart:</h1>
+
+<button
+  type="button"
+  (click)="onCheckout()"
+  class="mui-btn mui-btn--accent"
+  [disabled]="!lineItems || lineItems.length < 1"
+>
+    <span class="material-icons" style="vertical-align: middle;padding-right: 7px;">
+      shopping_cart
+    </span>
+  <ng-container *ngIf="!lineItems || lineItems.length < 1; else elseBlock">Checkout 0 items</ng-container>
+
+</button>
+
+<div class="mui-panel">
+  <table class="mui-table mui-table--bordered">
+    <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Description</th>
+      <th>Qty</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let lineItem of lineItems">
+      <td>{{ lineItem.product.sku }}</td>
+      <td>{{ lineItem.product.description }}</td>
+      <td>{{ lineItem.quantity }}</td>
+      <td>{{ lineItem.product.price | currency }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="mui-panel" *ngIf="receipt && lineItems.length < 1">
+  <h1>Receipt</h1>
+  <pre>{{ receipt }}</pre>
+
+</div>
+<ng-template #elseBlock>
+  Checkout {{ lineItems.length }} Item{{ lineItems.length > 1 ? "s" : "" }}
+</ng-template>
+

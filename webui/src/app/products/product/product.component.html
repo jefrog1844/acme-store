@@ -1,0 +1,27 @@
+<div class="mui-col-md-4">
+  <div class="mui-panel">
+    <div class="card">
+      <h2>
+        <img
+          src="assets/logo.jpeg"
+          alt="Acme Corporation"
+          style="vertical-align: bottom; height: 32px"
+        />Product #{{ product.sku }}
+      </h2>
+      <ul>
+        <li>{{ product.description }}</li>
+        <li>{{ product.price | currency }}</li>
+      </ul>
+      <button
+        (click)="addToCart(product)"
+        type="button"
+        class="mui-btn mui-btn--primary"
+      >
+          <span class="material-icons" style="vertical-align: middle">
+            add_shopping_cart
+          </span>
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>
